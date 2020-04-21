@@ -36,7 +36,7 @@
                             <v-select :items="level" label="Skill Level"></v-select>
                           </v-card-subtitle>
                         </div>
-                        <v-avatar class="ma-3" size="125" tile>
+                        <v-avatar class="ma-3" size="80" tile>
                           <v-img :src="'http://img-cdn.mobilecomics.net/' + skill.icon"></v-img>
                         </v-avatar>
                       </div>

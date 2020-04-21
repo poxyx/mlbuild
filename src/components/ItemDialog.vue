@@ -11,9 +11,6 @@
           </v-btn>
           <v-toolbar-title>Settings</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Save</v-btn>
-          </v-toolbar-items>
         </v-toolbar>
 
         <v-tabs v-model="tab" background-color="indigo lighten-1" dark>
@@ -25,7 +22,160 @@
             <v-card flat>
               <v-card-text>{{ item.content }}</v-card-text>
               <div v-if="item.tab == 'ATTACK'">
-                <span v-for="(a,i) in getAllAttackItem" :key="i">{{ a.name }}</span>
+                <v-row no-gutters>
+                  <v-col md="3" sm="12" xs="12" v-for="(a,i) in getAllAttackItem" :key="i">
+                    <v-card class="mx-auto mb-3" max-width="344" outlined>
+                      <v-list-item three-line>
+                        <v-list-item-content>
+                          <div class="overline mb-4">TIER {{ a.custom.tier }}</div>
+                          <v-list-item-title class="headline mb-1">{{ a.name }}</v-list-item-title>
+                          <v-list-item-subtitle>
+                            <v-spacer></v-spacer>
+                            BUY : {{ a.custom.gold.base }} |
+                            SELL : {{ a.custom.gold.sell }}
+                          </v-list-item-subtitle>
+                        </v-list-item-content>
+                        <v-list-item-avatar tile size="80">
+                          <v-img :src="'http://img-cdn.mobilecomics.net/' + a.icon"></v-img>
+                        </v-list-item-avatar>
+                      </v-list-item>
+                      <v-card-actions>
+                        <v-btn color="pink--text" flat text>SELECT</v-btn>
+                        <v-btn text>DETAILS</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </div>
+              <div v-if="item.tab == 'MAGIC'">
+                <v-row no-gutters>
+                  <v-col md="3" sm="12" xs="12" v-for="(a,i) in getAllMagicItem" :key="i">
+                    <v-card class="mx-auto mb-3" max-width="344" outlined>
+                      <v-list-item three-line>
+                        <v-list-item-content>
+                          <div class="overline mb-4">TIER {{ a.custom.tier }}</div>
+                          <v-list-item-title class="headline mb-1">{{ a.name }}</v-list-item-title>
+                          <v-list-item-subtitle>
+                            <v-spacer></v-spacer>
+                            BUY : {{ a.custom.gold.base }} |
+                            SELL : {{ a.custom.gold.sell }}
+                          </v-list-item-subtitle>
+                        </v-list-item-content>
+                        <v-list-item-avatar tile size="80">
+                          <v-img :src="'http://img-cdn.mobilecomics.net/' + a.icon"></v-img>
+                        </v-list-item-avatar>
+                      </v-list-item>
+                      <v-card-actions>
+                        <v-btn color="pink--text" flat text>SELECT</v-btn>
+                        <v-btn text>DETAILS</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </div>
+              <div v-if="item.tab == 'DEFENSE'">
+                <v-row no-gutters>
+                  <v-col md="3" sm="12" xs="12" v-for="(a,i) in getAllDefenseItem" :key="i">
+                    <v-card class="mx-auto mb-3" max-width="344" outlined>
+                      <v-list-item three-line>
+                        <v-list-item-content>
+                          <div class="overline mb-4">TIER {{ a.custom.tier }}</div>
+                          <v-list-item-title class="headline mb-1">{{ a.name }}</v-list-item-title>
+                          <v-list-item-subtitle>
+                            <v-spacer></v-spacer>
+                            BUY : {{ a.custom.gold.base }} |
+                            SELL : {{ a.custom.gold.sell }}
+                          </v-list-item-subtitle>
+                        </v-list-item-content>
+                        <v-list-item-avatar tile size="80">
+                          <v-img :src="'http://img-cdn.mobilecomics.net/' + a.icon"></v-img>
+                        </v-list-item-avatar>
+                      </v-list-item>
+                      <v-card-actions>
+                        <v-btn color="pink--text" flat text>SELECT</v-btn>
+                        <v-btn text>DETAILS</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </div>
+              <div v-if="item.tab == 'MOVEMENT'">
+                <v-row no-gutters>
+                  <v-col md="3" sm="12" xs="12" v-for="(a,i) in getAllMovementItem" :key="i">
+                    <v-card class="mx-auto mb-3" max-width="344" outlined>
+                      <v-list-item three-line>
+                        <v-list-item-content>
+                          <div class="overline mb-4">TIER {{ a.custom.tier }}</div>
+                          <v-list-item-title class="headline mb-1">{{ a.name }}</v-list-item-title>
+                          <v-list-item-subtitle>
+                            <v-spacer></v-spacer>
+                            BUY : {{ a.custom.gold.base }} |
+                            SELL : {{ a.custom.gold.sell }}
+                          </v-list-item-subtitle>
+                        </v-list-item-content>
+                        <v-list-item-avatar tile size="80">
+                          <v-img :src="'http://img-cdn.mobilecomics.net/' + a.icon"></v-img>
+                        </v-list-item-avatar>
+                      </v-list-item>
+                      <v-card-actions>
+                        <v-btn color="pink--text" flat text>SELECT</v-btn>
+                        <v-btn text>DETAILS</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </div>
+              <div v-if="item.tab == 'JUNGLE'">
+                <v-row no-gutters>
+                  <v-col md="3" sm="12" xs="12" v-for="(a,i) in getAllJungleItem" :key="i">
+                    <v-card class="mx-auto mb-3" max-width="344" outlined>
+                      <v-list-item three-line>
+                        <v-list-item-content>
+                          <div class="overline mb-4">TIER {{ a.custom.tier }}</div>
+                          <v-list-item-title class="headline mb-1">{{ a.name }}</v-list-item-title>
+                          <v-list-item-subtitle>
+                            <v-spacer></v-spacer>
+                            BUY : {{ a.custom.gold.base }} |
+                            SELL : {{ a.custom.gold.sell }}
+                          </v-list-item-subtitle>
+                        </v-list-item-content>
+                        <v-list-item-avatar tile size="80">
+                          <v-img :src="'http://img-cdn.mobilecomics.net/' + a.icon"></v-img>
+                        </v-list-item-avatar>
+                      </v-list-item>
+                      <v-card-actions>
+                        <v-btn color="pink--text" flat text>SELECT</v-btn>
+                        <v-btn text>DETAILS</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </div>
+              <div v-if="item.tab == 'ROAM'">
+                <v-row no-gutters>
+                  <v-col md="3" sm="12" xs="12" v-for="(a,i) in getAllRoamItem" :key="i">
+                    <v-card class="mx-auto mb-3" max-width="344" outlined>
+                      <v-list-item three-line>
+                        <v-list-item-content>
+                          <div class="overline mb-4">TIER {{ a.custom.tier }}</div>
+                          <v-list-item-title class="headline mb-1">{{ a.name }}</v-list-item-title>
+                          <v-list-item-subtitle>
+                            <v-spacer></v-spacer>
+                            BUY : {{ a.custom.gold.base }} |
+                            SELL : {{ a.custom.gold.sell }}
+                          </v-list-item-subtitle>
+                        </v-list-item-content>
+                        <v-list-item-avatar tile size="80">
+                          <v-img :src="'http://img-cdn.mobilecomics.net/' + a.icon"></v-img>
+                        </v-list-item-avatar>
+                      </v-list-item>
+                      <v-card-actions>
+                        <v-btn color="pink--text" flat text>SELECT</v-btn>
+                        <v-btn text>DETAILS</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+                </v-row>
               </div>
             </v-card>
           </v-tab-item>
@@ -54,7 +204,7 @@ export default {
         { tab: "DEFENSE", content: "Tab 3 Content" },
         { tab: "MOVEMENT", content: "Tab 4 Content" },
         { tab: "JUNGLE", content: "Tab 5 Content" },
-        { tab: "BASIC", content: "Tab 6 Content" }
+        { tab: "ROAM", content: "Tab 6 Content" }
       ]
     };
   },
@@ -62,6 +212,31 @@ export default {
     getAllAttackItem() {
       return this.fullItemList.filter(item => {
         return item.custom.group == "Attack";
+      });
+    },
+    getAllMagicItem() {
+      return this.fullItemList.filter(item => {
+        return item.custom.group == "Magic";
+      });
+    },
+    getAllDefenseItem() {
+      return this.fullItemList.filter(item => {
+        return item.custom.group == "Defense";
+      });
+    },
+    getAllJungleItem() {
+      return this.fullItemList.filter(item => {
+        return item.custom.group == "Jungle";
+      });
+    },
+    getAllMovementItem() {
+      return this.fullItemList.filter(item => {
+        return item.custom.group == "Movement";
+      });
+    },
+    getAllRoamItem() {
+      return this.fullItemList.filter(item => {
+        return item.custom.group == "Roam";
       });
     }
   },
