@@ -9,7 +9,7 @@
         fixed
         bottom
         right
-        color="indigo"
+        color="indigo lighthen-1"
         @click="toTop"
       >
         <v-icon>fas fa-arrow-up</v-icon>
@@ -17,6 +17,7 @@
       <v-col cols="2" class="pa-1" v-for="h in filteredHero" :key="h.id">
         <v-hover v-slot:default="{ hover }" open-delay="0">
           <v-card
+            ripple
             :elevation="hover ? 24 : 1"
             text
             class="mt-2 mr-1 mx-auto"
@@ -26,7 +27,7 @@
             <div class="ribbon ribbon-top-right hidden-sm-and-down" v-if="h.id == newHero">
               <span>NEW HERO</span>
             </div>
-            <router-link v-bind:to="'home'" style="text-decoration:none" class="white--text">
+            <router-link :to="{ name: 'HeroBuilder', query:{hero: h} }" style="text-decoration:none" class="white--text">
               <v-img
                 :src="imgUrl + h.picture"
                 lazy-src="https://m.mobilelegends.com/static/images/background/barbaclighter.png"
@@ -42,11 +43,9 @@
                 </template>
               </v-img>
             </router-link>
-            <v-card-text class="grey darken-3 lighten-2 pa-5 hidden-sm-and-down">
+            <v-card-text class="indigo lighten-1 pa-5 hidden-sm-and-down text-center">
               <div>
-                <h2 class="white--text">
-                  <i>{{ h.name }}</i>
-                </h2>
+                <h2 class="white--text">{{ h.name }}</h2> 
               </div>
             </v-card-text>
           </v-card>
@@ -61,10 +60,9 @@ export default {
   name: "HeroCard",
   data: () => ({
     imgUrl: "http://img-cdn.mobilecomics.net/",
-    fab: false,
-    newHero: 93
+    fab: false
   }),
-  props: ["hero", "filter"],
+  props: ["hero", "filter", "newHero"],
   methods: {
     onScroll(e) {
       if (typeof window === "undefined") return;
@@ -77,11 +75,23 @@ export default {
   },
   computed: {
     filteredHero() {
+
+      const heroTypeFilter = [
+        "Assassin",
+        "Fighter",
+        "Mage",
+        "Marksman",
+        "Support",
+        "Tank"
+      ];
+
       return this.hero.filter(hero => {
         if (this.filter == "All") {
           return true;
-        } else {
+        } else if(heroTypeFilter.indexOf(this.filter) != -1){
           return hero.type == this.filter;
+        } else {
+          return hero.name == this.filter;
         }
       });
     }
@@ -95,7 +105,7 @@ export default {
   height: 150px;
   overflow: hidden;
   position: absolute;
-  z-index: 999999;
+  z-index: 4;
 }
 
 .ribbon::before,
@@ -104,14 +114,14 @@ export default {
   z-index: -1;
   content: "";
   display: block;
-  border: 5px solid #E53935;
+  border: 5px solid #e53935;
 }
 .ribbon span {
   position: absolute;
   display: block;
   width: 225px;
   padding: 7px 0;
-  background-color: #E53935;
+  background-color: #e53935;
   box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
   color: #fff;
   font: 500 16px/1 "Lato", sans-serif;

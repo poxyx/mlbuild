@@ -4,40 +4,55 @@
       <v-menu :close-on-content-click="false" :nudge-width="0" offset-y>
         <template v-slot:activator="{ on }">
           <v-btn text v-on="on">
-            <v-icon class="mr-3">fas fa-search</v-icon>
-            SEARCH BY NAME
+            <v-icon class="mr-3">fas fa-filter</v-icon>FILTER BY NAME
           </v-btn>
         </template>
 
         <v-card height="350px" style="border-radius:0px">
           <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title class="ml-3">{{ item.title }}</v-list-item-title>
+            <v-list-item v-for="(hero, index) in heroList" :key="index">
+              <v-list-item-title class="ml-3">
+                <v-btn text block @click=" filterHeroByName(hero.name)">{{ hero.name }}</v-btn>
+              </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-card>
       </v-menu>
 
-      <v-divider class="mx-4  hidden-sm-and-down" inset vertical></v-divider>
+      <v-divider class="mx-4 hidden-sm-and-down" inset vertical></v-divider>
 
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn text @click="filterHero('All')">ALL</v-btn>
-        <v-btn text @click="filterHero('Assassin')">ASSASSINS</v-btn>
-        <v-btn text @click="filterHero('Fighter')">FIGHTERS</v-btn>
-        <v-btn text @click="filterHero('Mage')">MAGES</v-btn>
-        <v-btn text @click="filterHero('Marksman')">MARKSMEN</v-btn>
-        <v-btn text @click="filterHero('Support')">SUPPORTS</v-btn>
-        <v-btn text @click="filterHero('Tank')">TANKS</v-btn>
+        <v-btn text @click="filterHeroByType('All')">ALL</v-btn>
+        <v-btn text @click="filterHeroByType('Assassin')">ASSASSINS</v-btn>
+        <v-btn text @click="filterHeroByType('Fighter')">FIGHTERS</v-btn>
+        <v-btn text @click="filterHeroByType('Mage')">MAGES</v-btn>
+        <v-btn text @click="filterHeroByType('Marksman')">MARKSMEN</v-btn>
+        <v-btn text @click="filterHeroByType('Support')">SUPPORTS</v-btn>
+        <v-btn text @click="filterHeroByType('Tank')">TANKS</v-btn>
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
-      <v-divider class="mx-4  hidden-sm-and-down" inset vertical></v-divider>
-      <v-btn text>ALL DIFFICULTIES</v-btn>
+      <v-divider class="mx-4 hidden-sm-and-down" inset vertical></v-divider>
+      <v-menu :close-on-content-click="false" :nudge-width="0" offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn text v-on="on" @click="test">HERO DIFFICULTIES</v-btn>
+        </template>
+
+        <v-card height="350px" style="border-radius:0px">
+          <v-list>
+            <v-list-item v-for="(d, index) in filteredDifficulty" :key="index">
+              <v-list-item-title class="ml-3">
+                <v-btn text block>{{ d }}</v-btn>
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
     </v-toolbar>
     <v-container>
-      <HeroCard v-bind:hero="heroList" v-bind:filter="filter" />
+      <HeroCard :hero="heroList" :filter="filter" :new-hero="newestHero" />
     </v-container>
   </v-container>
 </template>
@@ -49,37 +64,26 @@ export default {
     HeroCard
   },
   methods: {
-    filterHero(type) {
+    filterHeroByType(type) {
       this.filter = type;
+    },
+    filterHeroByName(name) {
+      this.filter = name;
+    },
+    test() {
+      console.log(this.heroDifficulty);
     }
   },
   data: () => ({
     heroList: [],
+    filteredDifficulty: [],
     filter: "All",
-    items: [
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" },
-      { title: "Click Me" }
-    ]
+    newestHero: 0
   }),
+  computed: {},
   beforeCreate: function() {
     fetch(
-      "http://img-cdn.mobilecomics.net/miya/hero_en_c46a9da73b0464a4a2af7c7cf11d3fda.json",
+      "http://img-cdn.mobilecomics.net/miya/hero_en_860faacbb6901562bc109bc92b2cfb7d.json",
       {
         method: "GET",
         redirect: "follow"
@@ -88,7 +92,15 @@ export default {
       .then(response => response.json())
       .then(result => {
         this.heroList = result.data.hero;
-        console.log(result.data.hero[0]);
+        this.newestHero = result.data.hero.length + 1;
+      })
+      .then(() => {
+        this.heroList.forEach(item => {
+          this.filteredDifficulty.push(item.ability[3]);
+        });
+      })
+      .then(() => {
+        this.filteredDifficulty = new Set(this.filteredDifficulty);
       })
       .catch(error => console.log("error", error));
   }

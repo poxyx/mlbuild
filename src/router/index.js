@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Test from "@/components/TestApi.vue";
+import HeroBuilder from "@/components/HeroBuilder.vue";
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,11 @@ const routes = [
     component: Test
   },
   {
+    path: "/hero-builder/",
+    name: "HeroBuilder",
+    component: HeroBuilder
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -28,7 +34,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
-  // mode: "history",
+  mode: "history",
   base: process.env.BASE_URL,
   routes
 });
