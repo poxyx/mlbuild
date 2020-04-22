@@ -2,10 +2,10 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
       <template v-slot:activator="{ on }">
-        <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
+        <v-btn v-on="on" text>Add Item</v-btn>
       </template>
       <v-card>
-        <v-toolbar dark color="indigo lighten-1" style="border-radius:0px">
+        <v-toolbar dark color="indigo lighten-1" style="border-radius:0px" >
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -40,8 +40,8 @@
                         </v-list-item-avatar>
                       </v-list-item>
                       <v-card-actions>
-                        <v-btn color="pink--text" flat text>SELECT</v-btn>
-                        <v-btn text>DETAILS</v-btn>
+                        <v-btn color="pink--text" @click="setItem(a)" text>SELECT</v-btn>
+                        <v-btn text>VIEW DETAILS</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-col>
@@ -66,8 +66,8 @@
                         </v-list-item-avatar>
                       </v-list-item>
                       <v-card-actions>
-                        <v-btn color="pink--text" flat text>SELECT</v-btn>
-                        <v-btn text>DETAILS</v-btn>
+                        <v-btn color="pink--text"  @click="setItem(a)" text>SELECT</v-btn>
+                        <v-btn text>VIEW DETAILS</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-col>
@@ -92,8 +92,8 @@
                         </v-list-item-avatar>
                       </v-list-item>
                       <v-card-actions>
-                        <v-btn color="pink--text" flat text>SELECT</v-btn>
-                        <v-btn text>DETAILS</v-btn>
+                        <v-btn color="pink--text" @click="setItem(a)"  text>SELECT</v-btn>
+                        <v-btn text>VIEW DETAILS</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-col>
@@ -118,8 +118,8 @@
                         </v-list-item-avatar>
                       </v-list-item>
                       <v-card-actions>
-                        <v-btn color="pink--text" flat text>SELECT</v-btn>
-                        <v-btn text>DETAILS</v-btn>
+                        <v-btn color="pink--text"  @click="setItem(a)" text>SELECT</v-btn>
+                        <v-btn text>VIEW DETAILS</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-col>
@@ -144,8 +144,8 @@
                         </v-list-item-avatar>
                       </v-list-item>
                       <v-card-actions>
-                        <v-btn color="pink--text" flat text>SELECT</v-btn>
-                        <v-btn text>DETAILS</v-btn>
+                        <v-btn color="pink--text"  @click="setItem(a)" text>SELECT</v-btn>
+                        <v-btn text>VIEW DETAILS</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-col>
@@ -170,8 +170,8 @@
                         </v-list-item-avatar>
                       </v-list-item>
                       <v-card-actions>
-                        <v-btn color="pink--text" flat text>SELECT</v-btn>
-                        <v-btn text>DETAILS</v-btn>
+                        <v-btn color="pink--text"  @click="setItem(a)" text>SELECT</v-btn>
+                        <v-btn text>VIEW DETAILS</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-col>
@@ -188,7 +188,7 @@
 <script>
 export default {
   name: "ItemDialog",
-  props: ["items"],
+  props: ["items","itemSlot"],
   data() {
     return {
       dialog: false,
@@ -196,17 +196,23 @@ export default {
       sound: true,
       widgets: false,
       tab: null,
-      needToFix: [1111, 1112],
+      needToFix: [1111, 1112], // no tags and group
       fullItemList: [],
       tabItems: [
-        { tab: "ATTACK", content: "Tab 1 Content" },
-        { tab: "MAGIC", content: "Tab 2 Content" },
-        { tab: "DEFENSE", content: "Tab 3 Content" },
-        { tab: "MOVEMENT", content: "Tab 4 Content" },
-        { tab: "JUNGLE", content: "Tab 5 Content" },
-        { tab: "ROAM", content: "Tab 6 Content" }
+        { tab: "ATTACK", content: "ADD ITEM FOR SLOT " + this.$props.itemSlot },
+        { tab: "MAGIC", content:  "ADD ITEM FOR SLOT " + this.$props.itemSlot },
+        { tab: "DEFENSE", content:  "ADD ITEM FOR SLOT " + this.$props.itemSlot },
+        { tab: "MOVEMENT", content:  "ADD ITEM FOR SLOT " + this.$props.itemSlot },
+        { tab: "JUNGLE", content:  "ADD ITEM FOR SLOT " + this.$props.itemSlot },
+        { tab: "ROAM", content:  "ADD ITEM FOR SLOT " + this.$props.itemSlot }
       ]
     };
+  },
+  methods:{
+    setItem(item) {
+      this.$emit("changeItemSlot",item,this.$props.itemSlot)
+      this.dialog = false
+    }
   },
   computed: {
     getAllAttackItem() {
